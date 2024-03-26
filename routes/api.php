@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,14 @@ use App\Http\Controllers\AuthController;
 |
 */
 
+Route::prefix('auth')->group(function () {
+    Route::post('register' , [AuthController::class , 'register'] ) ; 
+    Route::post('login' , [AuthController::class , 'Login'] ) ;
+});
 
-Route::post('register' , [AuthController::class , 'register'] ) ; 
-Route::post('login' , [AuthController::class , 'Login'] ) ;
+Route::middleware('auth:sanctum')->prefix('category')->group( function () { 
+    Route::post('create-category ' , [CategoryController::class , 'createCategory']) ; 
+    Route::get('get-categories'  , [CategoryController::class , 'getCategories'] ) ;
+    Route::put('update-category/{categoryId}' , [CategoryController::class , 'updateCategory']) ;
+    Route::delete('delete-category/{categoryId}' , [CategoryController::class , 'deleteCategory']) ;
+} ) ;
