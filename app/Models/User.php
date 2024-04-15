@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use PhpParser\Node\Stmt\Return_;
 
 class User extends Authenticatable
 {
@@ -46,5 +47,11 @@ class User extends Authenticatable
 
     public function category() : HasMany {
          return $this->hasMany( Category::class , 'user_id' , 'user_id') ;
+    } 
+    public function product() : HasMany  {
+          return $this->hasMany(Product::class , 'user_id' , 'user_id'  ) ;
+    }
+    public function supplier() : HasMany { 
+          return $this->hasMany(Supplier::class , 'user_id' , 'user_id') ;
     }
 }

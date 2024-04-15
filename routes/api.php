@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,5 +27,12 @@ Route::middleware('auth:sanctum')->prefix('category')->group( function () {
     Route::post('create-category ' , [CategoryController::class , 'createCategory']) ; 
     Route::get('get-categories'  , [CategoryController::class , 'getCategories'] ) ;
     Route::put('update-category/{categoryId}' , [CategoryController::class , 'updateCategory']) ;
-    Route::delete('delete-category/{categoryId}' , [CategoryController::class , 'deleteCategory']) ;
+    Route::delete('delete-category/{categoryId}' , [CategoryController::class , 'deleteCategory']) ; 
 } ) ;
+
+Route::middleware('auth:sanctum')->prefix('product')->group( function() { 
+    Route::post('add-product/{categoryId}', [ProductController::class , 'addProduct']) ; 
+    Route::get('getProducts' , [ProductController::class , 'getProducts'] ) ;
+    
+      
+}) ;
