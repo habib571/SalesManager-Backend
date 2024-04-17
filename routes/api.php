@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SuppliersController;
 use App\Models\Product;
 
 /*
@@ -32,7 +33,12 @@ Route::middleware('auth:sanctum')->prefix('category')->group( function () {
 
 Route::middleware('auth:sanctum')->prefix('product')->group( function() { 
     Route::post('add-product/{categoryId}', [ProductController::class , 'addProduct']) ; 
-    Route::get('getProducts' , [ProductController::class , 'getProducts'] ) ;
-    
-      
+    Route::get('getProducts' , [ProductController::class , 'getProducts'] ) ;     
 }) ;
+
+Route::middleware('auth:sanctum')->prefic('supplier')->group(  function() {
+     Route::post('add-supplier' , [SuppliersController::class ,  'addSupplier']) ; 
+    Route::get('get-suppliers' , [SuppliersController::class , 'getSuppliers']) ;
+}
+);
+

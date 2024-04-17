@@ -24,7 +24,6 @@ class ProductController extends Controller
                $product->sales_price = $validatedData['sales_price'];
                $product->serial_number = $validatedData['serial_number'];
                $product->tax = $validatedData['tax'];
-
                /* $category = Category::where('id' ,  $product->category_id)->first(); 
                if($category) {
                     $product->category_name = $category->name ;

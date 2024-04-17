@@ -11,7 +11,7 @@ class SupplierRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,24 @@ class SupplierRequest extends FormRequest
      */
     public function rules(): array
     {
+        return [ 
+            
+            "supplier_name" => ["required", "string", "max:10"],
+            "contact" => ["required", "integer", "max:8"],
+            "address" => ["required", "string", "max:12"], 
+            "description" => ["required" , "string" ] , 
+
+        ]; 
+    } 
+
+    public function messages(): array
+    {
         return [
-            //
+             'supplier_name.required' => 'please enter a name ' ,
+             'contact.required' => 'please enter a contact' ,
+             'address.required' => 'please enter an address' ,
+             'description.required' => 'please enter a description ' ,
+            
         ];
     }
 }
