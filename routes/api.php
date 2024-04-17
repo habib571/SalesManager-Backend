@@ -36,8 +36,8 @@ Route::middleware('auth:sanctum')->prefix('product')->group( function() {
     Route::get('getProducts' , [ProductController::class , 'getProducts'] ) ;     
 }) ;
 
-Route::middleware('auth:sanctum')->prefic('supplier')->group(  function() {
-     Route::post('add-supplier' , [SuppliersController::class ,  'addSupplier']) ; 
+Route::middleware('auth:sanctum')->prefix('supplier')->group(  function() {
+    Route::post('add-supplier' , [SuppliersController::class ,  'addSupplier']) ; 
     Route::get('get-suppliers' , [SuppliersController::class , 'getSuppliers']) ;
 }
 );
