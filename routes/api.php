@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SuppliersController;
+use App\Http\Requests\SupplierRequest;
 use App\Models\Product;
 
 /*
@@ -32,13 +33,17 @@ Route::middleware('auth:sanctum')->prefix('category')->group( function () {
 } ) ;
 
 Route::middleware('auth:sanctum')->prefix('product')->group( function() { 
-    Route::post('add-product/{categoryId}', [ProductController::class , 'addProduct']) ; 
-    Route::get('getProducts' , [ProductController::class , 'getProducts'] ) ;     
+    Route::post('add-product/{categoryId}/{supplierId}', [ProductController::class , 'addProduct']) ; 
+    Route::get('getProducts' , [ProductController::class , 'getProducts'] ) ;   
+    Route::put('update-products'  ,[ProductController::class , 'updateproducts'])   ;
+     Route::delete('delete-products' ,[ProductController::class] , 'deleteProducts') ;
 }) ;
 
 Route::middleware('auth:sanctum')->prefix('supplier')->group(  function() {
     Route::post('add-supplier' , [SuppliersController::class ,  'addSupplier']) ; 
-    Route::get('get-suppliers' , [SuppliersController::class , 'getSuppliers']) ;
+    Route::get('get-suppliers' , [SuppliersController::class , 'getSuppliers']) ; 
+    Route::put('update-supplier' , [SuppliersController::class ,'updateSupplier']) ; 
+    Route::delete('delete-supplier' , [SuppliersController::class , 'delete-supplier']) ;
 }
 );
 

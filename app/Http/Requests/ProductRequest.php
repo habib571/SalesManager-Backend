@@ -27,7 +27,8 @@ class ProductRequest extends FormRequest
             "serial_number" => ["required", "integer", "unique:products"],
             "model" => ["required", "string", "max:10"], 
             "sales_price" => ["required" , "integer" ] , 
-            "tax" =>["required" , "integer" , "max:100"]
+            "tax" =>["required" , "integer" , "max:100"] , 
+            "purshase_price" =>["required" , "integer" ] , 
 
         ]; 
     } 
@@ -39,7 +40,8 @@ class ProductRequest extends FormRequest
              'sales_price.integer' => 'price must be an integer' , 
              'sales_price.required' => 'please enter price'  ,
              'model.required' => 'please enter a model' ,
-             'tax.required' => 'please enter a valid tax '
+             'tax.required' => 'please enter a valid tax ' ,
+             'purshase_price.required' => "please enter a purshase price"
             
         ];
     }

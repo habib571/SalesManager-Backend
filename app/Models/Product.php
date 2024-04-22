@@ -17,9 +17,11 @@ class Product extends Model
         'model',
         // 'category_id', 
         'sales_price',
+        "purshase_price" ,
         //'unit', 
         'image',
-        'tax',
+        'tax', 
+
     ];
 
     public function category()
@@ -30,8 +32,7 @@ class Product extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
     } 
-    public function supplier() : HasOne {  
-        return $this->HasOne(Supplier::class) ;
-
-    }
+    public function supplier() { 
+        return $this->belongsTo(Supplier::class ,'supplier_id' , 'id' ) ;
+   } 
 }

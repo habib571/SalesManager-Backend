@@ -24,7 +24,7 @@ class SupplierRequest extends FormRequest
         return [ 
             
             "supplier_name" => ["required", "string", "max:10"],
-            "contact" => ["required", "integer", "max:8"],
+            "contact" => ["required", "string", "max:8"],
             "address" => ["required", "string", "max:12"], 
             "description" => ["required" , "string" ] , 
 

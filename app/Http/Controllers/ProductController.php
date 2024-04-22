@@ -11,10 +11,15 @@ use App\Traits\HttpResponses;
 class ProductController extends Controller
 {
      use HttpResponses;
-     public function addProduct(ProductRequest $request, $categoryId)
+     public function addProduct(ProductRequest $request, $categoryId , $supplierId)
      {
-          try {
-               $validatedData = $request->validated();
+          try { 
+               
+               $validatedData = $request->validated(); 
+               if($validatedData['purshase_price'] > $validatedData['sales_price']) {
+                     
+                    return  $this->error('sales price must be greater than purshase price');
+               }
                $user  = auth()->user();
                $product = new Product();
                $product->user_id = $user->user_id;
@@ -24,12 +29,14 @@ class ProductController extends Controller
                $product->sales_price = $validatedData['sales_price'];
                $product->serial_number = $validatedData['serial_number'];
                $product->tax = $validatedData['tax'];
+               $product->purshase_price = $validatedData['purshase_price'] ;
+               $product->supplier_id = $supplierId ;
                /* $category = Category::where('id' ,  $product->category_id)->first(); 
                if($category) {
                     $product->category_name = $category->name ;
                }*/
-
-
+           
+                 
                $product->save();
                return  $this->success($product, 200);
           } catch (\Exception $e) {
@@ -42,7 +49,7 @@ class ProductController extends Controller
           try {
                $user  = auth()->user();
 
-               $products = Product::with('category')
+               $products = Product::with('category')->with('supplier')
                     ->where('user_id', $user->user_id)
                     ->orderBy('created_at', 'desc')->get();
                $transformedProducts = $products->map(function ($product) {
@@ -50,7 +57,8 @@ class ProductController extends Controller
                          'id' => $product->id,
                          'name' => $product->name,
                          'category_name' => $product->category->name,
-                         'serial_number' => $product->serial_number,
+                         'serial_number' => $product->serial_number, 
+                         'supplier' => $product->supplier->suplier_name ,
                          'model' => $product->model,
                          'sales_price' => $product->sales_price,
                          'tax' => $product->tax
@@ -81,7 +89,7 @@ class ProductController extends Controller
                $product = Product::where('id', $user->user_id)->findOrFail($productId);
                $product->update(
                     $request->only(
-                         ['name', 'category_name', 'serial_number', 'sales_price', 'tax', 'model']
+                         ['name', 'category_name', 'serial_number', 'sales_price', 'tax', 'model' ,'purshase_price']
                     )
                );
                return $this->success('Product update successfully!');
