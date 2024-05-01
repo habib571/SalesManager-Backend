@@ -8,6 +8,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SuppliersController;
 use App\Http\Requests\SupplierRequest;
 use App\Models\Product;
+use App\Http\Controllers\CustomerController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -45,5 +47,11 @@ Route::middleware('auth:sanctum')->prefix('supplier')->group(  function() {
     Route::put('update-supplier' , [SuppliersController::class ,'updateSupplier']) ; 
     Route::delete('delete-supplier' , [SuppliersController::class , 'delete-supplier']) ;
 }
-);
+); 
+Route::middleware('auth:sanctum')->prefix('customer')->group(function() {
+    Route::post('add-customer', [CustomerController::class, 'addCustomer']);
+    Route::get('get-customers', [CustomerController::class, 'getCustomers']);
+    Route::put('update-customer/{customerId}', [CustomerController::class, 'updateCustomer']);
+    Route::delete('delete-customer/{customerId}', [CustomerController::class, 'deleteCustomer']);
+});
 

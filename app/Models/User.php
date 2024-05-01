@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use PhpParser\Node\Stmt\Return_;
+use Termwind\Components\Hr;
 
 class User extends Authenticatable
 {
@@ -53,5 +54,14 @@ class User extends Authenticatable
     }
     public function supplier() : HasMany { 
           return $this->hasMany(Supplier::class , 'user_id' , 'user_id') ;
+    } 
+    public function customer() :HasMany { 
+          return $this->hasMany(Customer::class , 'user_id' ,'user_id' ) ;      
+    } 
+    public function invoice() : HasMany {
+         return $this->hasMany(Invoice::class ,'user_id' ,'user_id' ) ;
     }
+    public function invoiceProduct() : HasMany {
+        return $this->hasMany(Invoiceproduct::class ,'user_id' ,'user_id' ) ;
+   }
 }

@@ -56,9 +56,9 @@ class SuppliersController extends Controller
          
 
     } 
-    public function updateSupplier($supplierId) { 
+    public function updateSupplier( SupplierRequest $request , $supplierId) { 
         try {  
-            $validatedData = $request->validated();
+           $request->validated();
             $user =auth()->user() ; 
             
         $supplier = Supplier::where('user_id' , $user->user_id)->findOrfail($supplierId) ;
