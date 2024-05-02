@@ -11,28 +11,29 @@ use Illuminate\Http\Request;
 class InvoiceController extends Controller
 {
     use HttpResponses;
-    public function  addInvoice($custmomerId  ,$invoiceId , InvoiceProductRequest $request)
+    public function  addInvoice($custmomerId, InvoiceProductRequest $request)
     {
-        try{
+        try {
             $user = auth()->user();
             $invoice = new Invoice();
-            $invoice->cutomer_id = $custmomerId;
+            $invoice->customer_id = $custmomerId;
             $invoice->user_id = $user->user_id;
-            $invoice->save();  
-            $data = $request->validate() ;  
-             
-            foreach($data as $key=>$value) { 
-                $invoiceProd =  new Invoiceproduct() ; 
-                $invoiceProd->user_id = $user->user_id ; 
-                $invoiceProd->invoice_id = $invoiceId ;
-                $invoiceProd->product_id = $value['product_id'] ;
-
+            $invoice->save();
+            $data = $request->validated();
+           
+            foreach ($data['product_id'] as $key => $product_id) {
+                $sale = new Invoiceproduct();
+                $sale->quantity = $data['quantity'][$key];
+                $sale->price = $data['price'][$key];
+                $sale->discount = $data['discount'][$key];
+                $sale->amount = $data['amount'][$key];
+                $sale->product_id = $product_id;
+                $sale->invoice_id = $invoice->id; 
+                $sale->user_id = $user->user_id;
+                 $sale->save();
             }
              
-
-
-
-
+            return  $this->success();
         } catch (\Exception $e) {
             return  $this->error('Failed to create new Invoice', ['details' => $e->getMessage()], 500);
         }

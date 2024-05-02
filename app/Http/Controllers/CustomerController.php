@@ -24,7 +24,8 @@ class CustomerController extends Controller
             $customer->details = $validatedData['details'];
             $customer->email = $validatedData['email'];
             $customer->user_id = $user->user_id;
-            $customer->save();
+            $customer->save(); 
+            return  $this->success($customer);
         } catch (\Exception $e) {
             return  $this->error('Failed to create new customer', ['details' => $e->getMessage()], 500);
         }
